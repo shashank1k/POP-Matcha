@@ -9,7 +9,7 @@ function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-const TOTAL_FRAMES = 120;
+const TOTAL_FRAMES = 189;
 
 export default function MatchaCanvas() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -40,13 +40,19 @@ export default function MatchaCanvas() {
         const frameNumber = i.toString().padStart(3, "0");
         img.src = `/Frames/ezgif-frame-${frameNumber}.jpg`;
         
-        img.onload = () => {
+        const handleLoad = () => {
           loadedCount++;
           setLoadProgress(Math.floor((loadedCount / TOTAL_FRAMES) * 100));
           if (loadedCount === TOTAL_FRAMES) {
             setImages(loadedImages);
             setIsLoading(false);
           }
+        };
+
+        img.onload = handleLoad;
+        img.onerror = () => {
+          console.error(`Failed to load frame: ${frameNumber}`);
+          handleLoad(); // Still increment loadedCount to avoid getting stuck
         };
         loadedImages[i - 1] = img;
       }
@@ -63,7 +69,7 @@ export default function MatchaCanvas() {
       const context = canvasRef.current.getContext("2d");
       if (!context) return;
 
-      const frameIndex = Math.min(TOTAL_FRAMES - 1, Math.floor((smoothedProgress.get() / 0.8) * (TOTAL_FRAMES - 1)));
+      const frameIndex = Math.min(TOTAL_FRAMES - 1, Math.floor((smoothedProgress.get() / 0.4) * (TOTAL_FRAMES - 1)));
       const image = images[frameIndex] || images[0];
 
       // "Cover" logic for canvas
@@ -109,17 +115,17 @@ export default function MatchaCanvas() {
   }, [images, isLoading, smoothedProgress]);
 
   // Scrollytelling Overlays
-  const text1Opacity = useTransform(scrollYProgress, [0, 0.05, 0.15, 0.2], [0, 1, 1, 0]);
-  const text1Y = useTransform(scrollYProgress, [0, 0.05, 0.15, 0.2], [20, 0, 0, -20]);
+  const text1Opacity = useTransform(scrollYProgress, [0, 0.03, 0.07, 0.1], [0, 1, 1, 0]);
+  const text1Y = useTransform(scrollYProgress, [0, 0.03, 0.07, 0.1], [20, 0, 0, -20]);
 
-  const text2Opacity = useTransform(scrollYProgress, [0.25, 0.3, 0.4, 0.45], [0, 1, 1, 0]);
-  const text2Y = useTransform(scrollYProgress, [0.25, 0.3, 0.4, 0.45], [20, 0, 0, -20]);
+  const text2Opacity = useTransform(scrollYProgress, [0.13, 0.16, 0.2, 0.23], [0, 1, 1, 0]);
+  const text2Y = useTransform(scrollYProgress, [0.13, 0.16, 0.2, 0.23], [20, 0, 0, -20]);
 
-  const text3Opacity = useTransform(scrollYProgress, [0.5, 0.55, 0.65, 0.7], [0, 1, 1, 0]);
-  const text3Y = useTransform(scrollYProgress, [0.5, 0.55, 0.65, 0.7], [20, 0, 0, -20]);
+  const text3Opacity = useTransform(scrollYProgress, [0.26, 0.29, 0.33, 0.36], [0, 1, 1, 0]);
+  const text3Y = useTransform(scrollYProgress, [0.26, 0.29, 0.33, 0.36], [20, 0, 0, -20]);
 
-  const text4Opacity = useTransform(scrollYProgress, [0.75, 0.8, 1, 1], [0, 1, 1, 1]);
-  const text4Y = useTransform(scrollYProgress, [0.75, 0.8, 1, 1], [20, 0, 0, 0]);
+  const text4Opacity = useTransform(scrollYProgress, [0.4, 0.43, 1, 1], [0, 1, 1, 1]);
+  const text4Y = useTransform(scrollYProgress, [0.4, 0.43, 1, 1], [20, 0, 0, 0]);
 
   if (isLoading) {
     return (
@@ -138,7 +144,7 @@ export default function MatchaCanvas() {
   }
 
   return (
-    <div ref={containerRef} className="relative h-[500vh] bg-[#050505]">
+    <div ref={containerRef} className="relative h-[1200vh] bg-[#050505]">
       <div className="sticky top-20 h-[calc(100vh-5rem)] w-full overflow-hidden">
         <canvas
           ref={canvasRef}
