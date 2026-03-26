@@ -241,9 +241,10 @@ export default function MatchaCanvas() {
             className="absolute inset-0 flex items-center justify-center px-8 text-center"
           >
             <h2 className="text-5xl font-black uppercase tracking-tighter text-white drop-shadow-[0_6px_30px_rgba(0,0,0,0.9)] md:text-7xl lg:text-8xl">
-              The <br />
+              Crack - Sip
+              <br />
               <span className="text-[#98FF98] drop-shadow-[0_0_25px_rgba(152,255,152,0.7)]">
-                Snap
+                Boom
               </span>
             </h2>
           </motion.div>
@@ -254,15 +255,17 @@ export default function MatchaCanvas() {
             className="absolute inset-0 flex items-center justify-center px-8 text-center"
           >
             <h2 className="text-5xl font-black uppercase tracking-tighter text-white drop-shadow-[0_6px_30px_rgba(0,0,0,0.9)] md:text-7xl lg:text-8xl">
-              Zero <br />
+              No Crash
+              <br />
               <span className="text-[#98FF98] drop-shadow-[0_0_25px_rgba(152,255,152,0.7)]">
-                Crash
+                Just Flow
               </span>
             </h2>
           </motion.div>
 
           {/* FINAL (STATIC) */}
           <motion.div
+            id="hero"
             style={{
               opacity: text4Opacity,
               transform: "translateY(0px)", // keep stagnant

@@ -27,7 +27,7 @@ export default function Home() {
           <a href="#reviews" className="transition-colors hover:text-[#98FF98]">
             Reviews
           </a>
-          <a href="#" className="transition-colors hover:text-[#98FF98]">
+          <a href="#hero" className="transition-colors hover:text-[#98FF98]">
             Shop
           </a>
         </div>
