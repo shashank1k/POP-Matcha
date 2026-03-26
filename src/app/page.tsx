@@ -1,47 +1,89 @@
+"use client";
 import MatchaCanvas from "@/components/MatchaCanvas";
-
+import { useState } from "react";
 export default function Home() {
+  const [open, setOpen] = useState(false);
+  const scrollToHero = () => {
+    document.getElementById("hero")?.scrollIntoView({
+      behavior: "smooth",
+    });
+  };
   return (
     <main suppressHydrationWarning className="min-h-screen bg-[#050505]">
       {/* Navigation */}
-      <nav
-        suppressHydrationWarning
-        className="fixed top-0 z-50 flex w-full items-center justify-between bg-[#050505]/80 px-8 py-4 backdrop-blur-md border-b border-white/5"
-      >
-        <div className="text-2xl font-black tracking-tighter text-white">
-          POP <span className="text-[#98FF98]">MATCHA</span>
-        </div>
-        <div className="hidden space-x-8 text-xs font-bold uppercase tracking-widest text-white/60 md:flex">
-          <a
-            href="#benefits"
-            className="transition-colors hover:text-[#98FF98]"
+      <nav className="fixed top-0 z-50 w-full bg-[#050505]/80 backdrop-blur-md border-b border-white/5">
+        <div className="flex items-center justify-between px-6 md:px-8 py-4">
+          {/* Logo */}
+          <div className="text-2xl font-black tracking-tighter text-white">
+            POP <span className="text-[#98FF98]">MATCHA</span>
+          </div>
+
+          {/* Desktop Menu */}
+          <div className="hidden md:flex space-x-8 text-xs font-bold uppercase tracking-widest text-white/60">
+            <a href="#benefits" className="hover:text-[#98FF98]">
+              Benefits
+            </a>
+            <a href="#ingredients" className="hover:text-[#98FF98]">
+              Ingredients
+            </a>
+            <a href="#reviews" className="hover:text-[#98FF98]">
+              Reviews
+            </a>
+            <a
+              onClick={scrollToHero}
+              className="cursor-pointer transition-colors hover:text-[#98FF98]"
+            >
+              Shop
+            </a>
+          </div>
+
+          {/* Desktop Button */}
+          <button className="hidden md:block rounded-full border border-white/20 px-6 py-2 text-xs font-bold uppercase text-white hover:border-[#98FF98] hover:text-[#98FF98]">
+            Account
+          </button>
+
+          {/* Mobile Hamburger */}
+          <button
+            onClick={() => setOpen(!open)}
+            className="md:hidden text-white text-2xl"
           >
-            Benefits
-          </a>
-          <a
-            href="#ingredients"
-            className="transition-colors hover:text-[#98FF98]"
-          >
-            Ingredients
-          </a>
-          <a href="#reviews" className="transition-colors hover:text-[#98FF98]">
-            Reviews
-          </a>
-          <a href="#hero" className="transition-colors hover:text-[#98FF98]">
-            Shop
-          </a>
+            {open ? "✕" : "☰"}
+          </button>
         </div>
-        <button
-          suppressHydrationWarning
-          className="rounded-full border border-white/20 px-6 py-2 text-xs font-bold uppercase tracking-widest text-white transition-all hover:border-[#98FF98] hover:text-[#98FF98]"
+
+        {/* Mobile Menu */}
+        <div
+          className={`md:hidden transition-all duration-300 overflow-hidden ${
+            open ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+          }`}
         >
-          Account
-        </button>
+          <div className="flex flex-col items-center space-y-6 py-6 text-sm font-bold uppercase tracking-widest text-white/80">
+            <a href="#benefits" onClick={() => setOpen(false)}>
+              Benefits
+            </a>
+            <a href="#ingredients" onClick={() => setOpen(false)}>
+              Ingredients
+            </a>
+            <a href="#reviews" onClick={() => setOpen(false)}>
+              Reviews
+            </a>
+            <a
+              onClick={scrollToHero}
+              className="cursor-pointer transition-colors hover:text-[#98FF98]"
+            >
+              Shop
+            </a>
+
+            <button className="mt-4 rounded-full border border-white/20 px-6 py-2">
+              Account
+            </button>
+          </div>
+        </div>
       </nav>
 
       {/* Main Scrollytelling Canvas */}
       <MatchaCanvas />
-
+      <div id="hero" className="h-1 scroll-mt-24" />
       {/* Benefits Section */}
       <section id="benefits" className="relative z-10 bg-[#050505] px-8 py-32">
         <div className="mx-auto max-w-6xl">
